@@ -1,7 +1,7 @@
 WALLPAPER_DIR="/home/daniil/Walp/"
 if [ -d "$WALLPAPER_DIR" ]; then
     # Выбираем случайные обои
-    RANDOM_WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -name '*.jpg' -o -name '*.png' -o -name *.jpeg') | shuf -n 1)
+    RANDOM_WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' \) | shuf -n 1)
     
     # Устанавливаем обои через feh
     if [ -n "$RANDOM_WALLPAPER" ]; then

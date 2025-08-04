@@ -1,18 +1,15 @@
 WALLPAPER_DIR="/home/daniil/Walp/"
 if [ -d "$WALLPAPER_DIR" ]; then
     # Выбираем случайные обои
-    RANDOM_WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -name '*.jpg' -o -name '*.png' -o -name *.jpeg') | shuf -n 1)
+    RANDOM_WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' \) | shuf -n 1)
     
-    # Устанавливаем обои через feh
     if [ -n "$RANDOM_WALLPAPER" ]; then
         feh --bg-fill "$RANDOM_WALLPAPER"
         
-        # Генерируем и применяем цветовую схему через pywal
         if command -v wal >/dev/null; then
             wal -i "$RANDOM_WALLPAPER" -n
         fi
         
-        # Применяем цвета к bspwm
         if [ -f ~/.cache/wal/colors.sh ]; then
             . ~/.cache/wal/colors.sh
             bspc config normal_border_color "$color0"

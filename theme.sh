@@ -1,7 +1,6 @@
 #!/bin/bash
 
 WALLPAPER_DIR="/home/daniil/Walp/"
-
 # Функция для установки обоев
 set_wallpaper() {
     local wallpaper="$1"

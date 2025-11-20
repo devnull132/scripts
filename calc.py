@@ -15,6 +15,9 @@ class Colors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+def fast_cacl():
+    print(eval(input("Введите пример ")))
+
 def clear_screen():
     """Очистка экрана с проверкой ОС"""
     os.system('clear')
@@ -45,7 +48,8 @@ def display_operations():
         ("13. Логарифм по основанию 10 (log) ", Colors.CYAN),
         ("14. Натуральный логарифм (ln) ", Colors.CYAN),
         ("15. Факториал (!) ", Colors.CYAN),
-        ("16. Выход (q) ", Colors.RED)
+        ("16. Быстрый подсчет ", Colors.CYAN),
+        ("17. Выход (q) ", Colors.RED)
     ]
     
     for op, color in ops:
@@ -59,7 +63,7 @@ def linux_calculator():
         
         operation = input(f"\n{Colors.BOLD}{Colors.WHITE}Введите операцию (или номер): {Colors.RESET}").lower()
         
-        if operation in ['q', '16', 'выход']:
+        if operation in ['q', '17', 'выход']:
             print(f"{Colors.YELLOW}\nДо свидания!{Colors.RESET}")
             break
         
@@ -149,7 +153,8 @@ def linux_calculator():
                     print(f"{Colors.RED}Ошибка: факториал отрицательного числа не определен{Colors.RESET}")
                 else:
                     print(f"{Colors.BOLD}Результат: {Colors.CYAN}{math.factorial(a)}{Colors.RESET}")
-                    
+            elif operation == "16":
+                fast_cacl()
             else:
                 print(f"{Colors.RED}Неизвестная операция. Попробуйте снова.{Colors.RESET}")
                 

@@ -1,23 +1,29 @@
 #!/bin/bash
 
 WALLPAPER_DIR="/home/daniil/Walp/"
-# Функция для установки обоев
+
+# Функция для установки обоев в GNOME
 set_wallpaper() {
     local wallpaper="$1"
     
     if [ -n "$wallpaper" ]; then
-        feh --bg-fill "$wallpaper"
+        # Устанавливаем обои для GNOME
+        gsettings set org.gnome.desktop.background picture-uri "file://$wallpaper"
+        gsettings set org.gnome.desktop.background picture-uri-dark "file://$wallpaper"
+        gsettings set org.gnome.desktop.screensaver picture-uri "file://$wallpaper"
         
+        # Опционально: для динамических обоев (GNOME 42+)
+        # gsettings set org.gnome.desktop.background picture-options 'zoom'
+        
+        # Если установлен wal, генерируем цветовую схему
         if command -v wal >/dev/null; then
             wal -i "$wallpaper" -n
-        fi
-        
-        if [ -f ~/.cache/wal/colors.sh ]; then
-            . ~/.cache/wal/colors.sh
-            bspc config normal_border_color "$color0"
-            bspc config active_border_color "$color1"
-            bspc config focused_border_color "$color2"
-            bspc config presel_feedback_color "$color3"
+            
+            # Применяем цвета к GNOME терминалу (если используется)
+            if [ -f ~/.cache/wal/colors.sh ] && [ -f ~/.cache/wal/sequences ]; then
+                . ~/.cache/wal/colors.sh
+                # Можно добавить применение цветов к другим GNOME компонентам
+            fi
         fi
     fi
 }
@@ -34,6 +40,7 @@ if [ -d "$WALLPAPER_DIR" ]; then
             
             if [ -f "$wallpaper_path" ]; then
                 set_wallpaper "$wallpaper_path"
+                echo "Обои установлены: $filename"
                 exit 0
             else
                 echo "Файл не найден: $wallpaper_path"
@@ -42,10 +49,14 @@ if [ -d "$WALLPAPER_DIR" ]; then
         done
     else
         # Если аргументов нет - случайный выбор
-        RANDOM_WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' \) | shuf -n 1)
+        RANDOM_WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' -o -name '*.webp' \) | shuf -n 1)
         
         if [ -n "$RANDOM_WALLPAPER" ]; then
             set_wallpaper "$RANDOM_WALLPAPER"
+            echo "Случайные обои установлены: $(basename "$RANDOM_WALLPAPER")"
+        else
+            echo "Не найдено файлов обоев в директории: $WALLPAPER_DIR"
+            exit 1
         fi
     fi
 else

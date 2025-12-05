@@ -49,7 +49,7 @@ if [ -d "$WALLPAPER_DIR" ]; then
         done
     else
         # Если аргументов нет - случайный выбор
-        RANDOM_WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' -o -name '*.webp' \) | shuf -n 1)
+        RANDOM_WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' -o -name '*.webp' -o -name '*.gif' \) | shuf -n 1)
         
         if [ -n "$RANDOM_WALLPAPER" ]; then
             set_wallpaper "$RANDOM_WALLPAPER"
